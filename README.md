@@ -1,7 +1,1 @@
-koyaan
-======
-
-A Symfony project created on June 16, 2015, 4:33 pm.
-
-- TODO: blog
-
+Koyaan's base Symfony 2.7 project with Sonata 2.3 integrated.
