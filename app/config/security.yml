@@ -51,6 +51,10 @@ security:
             anonymous:          true
     access_control:
             # URL of FOSUserBundle which need to be available to anonymous users
+             # URL of FOSUserBundle which need to be available to anonymous users
+            - { path: ^/_wdt, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
             - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }

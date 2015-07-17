@@ -158,16 +158,16 @@ sonata_media:
 
 
 sonata_news:
-    title:        koyaan.com blog
-    link:         https://koyaan.com
+    title:        Base Project
+    link:         http://localhost
     description:  infrequent updates
-    salt:         '2342098ad0fa8s3wä4psd8fap3w4'
+    salt:         '23092834-0298349'
     permalink_generator: sonata.news.permalink.date # sonata.news.permalink.collection
 
     comment:
         notification:
-            emails:   [koyaan@koyaan.com]
-            from:     no-reply@koyaan.com
+            emails:   [test@samson-it.nl]
+            from:     test@samson-it.nl
             template: 'SonataNewsBundle:Mail:comment_notification.txt.twig'
 
 sonata_formatter:
