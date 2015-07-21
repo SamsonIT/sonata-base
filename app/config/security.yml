@@ -31,6 +31,7 @@ security:
             logout:
                 path:           /admin/logout
             anonymous:          true
+            switch_user: true
 
         # -> end custom configuration
 
