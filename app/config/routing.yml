@@ -44,9 +44,3 @@ gallery:
 media:
     resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
     prefix: /media
-
-
-# sonate news
-news:
-    resource: '@SonataNewsBundle/Resources/config/routing/news.xml'
-    prefix: /news
