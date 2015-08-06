@@ -7,6 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    title: "%app_title%"
 
 framework:
     #esi:             ~
@@ -18,7 +19,7 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
+    serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
@@ -39,6 +40,9 @@ twig:
       resources:
           # ...
           - 'SonataFormatterBundle:Form:formatter.html.twig'
+    globals:
+      title: "%app_title%"
+
 
 # Assetic Configuration
 assetic:
@@ -102,6 +106,7 @@ fos_user:
         group_manager: sonata.user.orm.group_manager
     service:
         user_manager: sonata.user.orm.user_manager
+        mailer: fos_user.mailer.twig_swift
 
 sonata_user:
     security_acl: true
@@ -123,9 +128,22 @@ sonata_block:
         sonata.block.service.text:
 
 sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.acl
+        # acl security information
+        information:
+            GUEST:    [VIEW, LIST]
+            STAFF:    [EDIT, LIST, CREATE]
+            EDITOR:   [OPERATOR, EXPORT]
+            ADMIN:    [MASTER]
+        # permissions not related to an object instance and also to be available when objects do not exist
+        # the DELETE admin permission means the user is allowed to batch delete objects
+        admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
+        # permission related to the objects
+        object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
     templates:
-        # default global templates
         layout:  SonataAdminBundle::layout.html.twig
+    title: "@app_title"
 
 sonata_media:
     # if you don't use default namespace configuration
@@ -158,47 +176,3 @@ sonata_media:
 #    providers:
 #        image:
 #            resizer: sonata.media.resizer.square
-
-
-sonata_news:
-    title:        Base Project
-    link:         http://localhost
-    description:  infrequent updates
-    salt:         '23092834-0298349'
-    permalink_generator: sonata.news.permalink.date # sonata.news.permalink.collection
-
-    comment:
-        notification:
-            emails:   [test@samson-it.nl]
-            from:     test@samson-it.nl
-            template: 'SonataNewsBundle:Mail:comment_notification.txt.twig'
-
-sonata_formatter:
-    formatters:
-        markdown:
-            service: sonata.formatter.text.markdown
-            extensions:
-                - sonata.formatter.twig.control_flow
-                - sonata.formatter.twig.gist
-                - sonata.media.formatter.twig
-
-        text:
-            service: sonata.formatter.text.text
-            extensions:
-                - sonata.formatter.twig.control_flow
-                - sonata.formatter.twig.gist
-                - sonata.media.formatter.twig
-
-        rawhtml:
-            service: sonata.formatter.text.raw
-            extensions:
-                - sonata.formatter.twig.control_flow
-                - sonata.formatter.twig.gist
-                - sonata.media.formatter.twig
-
-        richhtml:
-            service: sonata.formatter.text.raw
-            extensions:
-                - sonata.formatter.twig.control_flow
-                - sonata.formatter.twig.gist
-                - sonata.media.formatter.twig
